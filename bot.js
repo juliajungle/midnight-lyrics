@@ -33,6 +33,6 @@ function lyricTweet() {
 }
 
 // tweet once a day
-// setInterval(lyricTweet, 86400000);
+setInterval(lyricTweet, 86400000);
 // testing
-setInterval(lyricTweet, 100000);
+// setInterval(lyricTweet, 100000);
