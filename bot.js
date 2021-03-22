@@ -2,6 +2,23 @@ const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
 var songs = require("./songs.json");
+var daysOfThunder = require("./days_of_thunder.json");
+var endlessSummer = require("./endless_summer.json");
+var nocturnal = require("./nocturnal.json");
+var kids = require("./kids.json");
+var monsters = require("./monsters.json");
+var horrorShow = require("./horror_show.json");
+
+// combine all the songs
+var allSongs = [
+  ...songs,
+  ...daysOfThunder,
+  ...endlessSummer,
+  ...nocturnal,
+  ...kids,
+  ...monsters,
+  ...horrorShow,
+];
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -11,13 +28,14 @@ function getRandomInt(min, max) {
 
 // Lyric tweeting bot
 function lyricTweet() {
-  // Get a random song from file
-  var song = songs[getRandomInt(0, songs.length - 1)];
+  // Get a random song from files
+  var randomInt = getRandomInt(0, allSongs.length - 1);
+  var song = allSongs[randomInt];
 
   // then get a random lyric from that song
   var lyrics = song.split("\n");
   var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
-  //   console.log(tweet);
+
   // Tweet that lyric
   T.post("statuses/update", { status: tweet }, tweeted);
 
