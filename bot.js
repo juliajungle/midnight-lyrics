@@ -11,43 +11,43 @@ var horrorShow = require("./horror_show.json");
 
 // combine all the songs
 var allSongs = [
-  ...songs,
-  ...daysOfThunder,
-  ...endlessSummer,
-  ...nocturnal,
-  ...kids,
-  ...monsters,
-  ...horrorShow,
+	...songs,
+	...daysOfThunder,
+	...endlessSummer,
+	...nocturnal,
+	...kids,
+	...monsters,
+	...horrorShow,
 ];
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Lyric tweeting bot
 function lyricTweet() {
-  // Get a random song from files
-  var randomInt = getRandomInt(0, allSongs.length - 1);
-  var song = allSongs[randomInt];
+	// Get a random song from files
+	var randomInt = getRandomInt(0, allSongs.length - 1);
+	var song = allSongs[randomInt];
 
-  // then get a random lyric from that song
-  var lyrics = song.split("\n");
-  var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+	// then get a random lyric from that song
+	var lyrics = song.split("\s");
+	var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
 
-  // Tweet that lyric
-  T.post("statuses/update", { status: tweet }, tweeted);
+	// Tweet that lyric
+	T.post("statuses/update", { status: tweet }, tweeted);
 
-  // Callback for when the tweet is sent
-  function tweeted(err, data, response) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Success: " + data.text);
-      //   console.log(response);
-    }
-  }
+	// Callback for when the tweet is sent
+	function tweeted(err, data, response) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("Success: " + data.text);
+			//   console.log(response);
+		}
+	}
 }
 
 // tweet once a day
