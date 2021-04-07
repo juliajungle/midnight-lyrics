@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
