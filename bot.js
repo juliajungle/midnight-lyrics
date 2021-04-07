@@ -33,7 +33,7 @@ function lyricTweet() {
 	var song = allSongs[randomInt];
 
 	// then get a random lyric from that song
-	var lyrics = song.split("\s");
+	var lyrics = song.split("|");
 	var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
 
 	// Tweet that lyric
@@ -50,7 +50,7 @@ function lyricTweet() {
 	}
 }
 
-// tweet once a day
-setInterval(lyricTweet, 86400000);
+// tweet once every 6 hours
+setInterval(lyricTweet, 14400000);
 // testing
 // setInterval(lyricTweet, 100000);
