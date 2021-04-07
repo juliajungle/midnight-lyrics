@@ -52,6 +52,6 @@ function lyricTweet() {
 }
 
 // tweet once every 6 hours
-setInterval(lyricTweet, 14400000);
+setInterval(lyricTweet, 21600000);
 // testing
-// setInterval(lyricTweet, 100000);
+//setInterval(lyricTweet, 100000);
