@@ -13,47 +13,47 @@ var horrorShow = require("./horror_show.json");
 
 // combine all the songs
 var allSongs = [
-  ...songs,
-  ...daysOfThunder,
-  ...endlessSummer,
-  ...nocturnal,
-  ...kids,
-  ...monsters,
-  ...horrorShow,
+	...songs,
+	...daysOfThunder,
+	...endlessSummer,
+	...nocturnal,
+	...kids,
+	...monsters,
+	...horrorShow,
 ];
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Lyric tweeting bot
 function lyricTweet(isMidnight) {
-  if (isMidnight) {
-    var tweet = "We are one beating heart";
-  } else {
-    // Get a random song from files
-    var randomInt = getRandomInt(0, allSongs.length - 1);
-    var song = allSongs[randomInt];
+	if (isMidnight) {
+		var tweet = "We are one beating heart";
+	} else {
+		// Get a random song from files
+		var randomInt = getRandomInt(0, allSongs.length - 1);
+		var song = allSongs[randomInt];
 
-    // then get a random lyric from that song
-    var lyrics = song.split("|");
-    var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
-  }
+		// then get a random lyric from that song
+		var lyrics = song.split("|");
+		var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+	}
 
-  // Tweet that lyric
-  T.post("statuses/update", { status: tweet }, tweeted);
+	// Tweet that lyric
+	T.post("statuses/update", { status: tweet }, tweeted);
 
-  // Callback for when the tweet is sent
-  function tweeted(err, data, response) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Success: " + data.text);
-      //   console.log(response);
-    }
-  }
+	// Callback for when the tweet is sent
+	function tweeted(err, data, response) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("Success: " + data.text);
+			//   console.log(response);
+		}
+	}
 }
 
 // tweet once every 6 hours
@@ -63,22 +63,22 @@ function lyricTweet(isMidnight) {
 
 // Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
-  lyricTweet(true);
+	lyricTweet(true);
 });
 
 // Tweet at 6am
 const job2 = new CronJob("00 00 06 * * *", function () {
-  lyricTweet();
+	lyricTweet();
 });
 
 // Tweet at midday
 const job3 = new CronJob("00 00 12 * * *", function () {
-  lyricTweet();
+	lyricTweet();
 });
 
 // Tweet at 6pm
 const job4 = new CronJob("00 00 18 * * *", function () {
-  lyricTweet();
+	lyricTweet();
 });
 
 job.start();
