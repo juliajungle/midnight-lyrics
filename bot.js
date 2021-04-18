@@ -29,15 +29,18 @@ function getRandomInt(min, max) {
 }
 
 // Lyric tweeting bot
-function lyricTweet() {
-  // Get a random song from files
-  var randomInt = getRandomInt(0, allSongs.length - 1);
-  var song = allSongs[randomInt];
+function lyricTweet(isMidnight) {
+  if (isMidnight) {
+    var tweet = "We are one beating heart";
+  } else {
+    // Get a random song from files
+    var randomInt = getRandomInt(0, allSongs.length - 1);
+    var song = allSongs[randomInt];
 
-  // then get a random lyric from that song
-  var lyrics = song.split("|");
-  //   console.log(lyrics);
-  var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+    // then get a random lyric from that song
+    var lyrics = song.split("|");
+    var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+  }
 
   // Tweet that lyric
   T.post("statuses/update", { status: tweet }, tweeted);
@@ -58,31 +61,23 @@ function lyricTweet() {
 // testing
 // setInterval(lyricTweet, 10000);
 
-// Tweet at midnight
+// Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
-  const d = new Date();
-  console.log("Midnight:", d);
-  lyricTweet();
+  lyricTweet(true);
 });
 
 // Tweet at 6am
 const job2 = new CronJob("00 00 06 * * *", function () {
-  const d = new Date();
-  console.log("6am:", d);
   lyricTweet();
 });
 
 // Tweet at midday
 const job3 = new CronJob("00 00 12 * * *", function () {
-  const d = new Date();
-  console.log("Midday:", d);
   lyricTweet();
 });
 
 // Tweet at 6pm
 const job4 = new CronJob("00 00 18 * * *", function () {
-  const d = new Date();
-  console.log("6pm:", d);
   lyricTweet();
 });
 
