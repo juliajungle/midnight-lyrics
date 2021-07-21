@@ -3,23 +3,23 @@ const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
 const CronJob = require("cron").CronJob;
-// var songs = require("./songs.json");
+var songs = require("./songs.json");
 var daysOfThunder = require("./days_of_thunder.json");
-// var endlessSummer = require("./endless_summer.json");
-// var nocturnal = require("./nocturnal.json");
-// var kids = require("./kids.json");
-// var monsters = require("./monsters.json");
-// var horrorShow = require("./horror_show.json");
+var endlessSummer = require("./endless_summer.json");
+var nocturnal = require("./nocturnal.json");
+var kids = require("./kids.json");
+var monsters = require("./monsters.json");
+var horrorShow = require("./horror_show.json");
 
 // combine all the songs
 var allSongs = [
-	// ...songs,
+	...songs,
 	...daysOfThunder,
-	// ...endlessSummer,
-	// ...nocturnal,
-	// ...kids,
-	// ...monsters,
-	// ...horrorShow,
+	...endlessSummer,
+	...nocturnal,
+	...kids,
+	...monsters,
+	...horrorShow,
 ];
 
 function getRandomInt(min, max) {
@@ -53,17 +53,20 @@ function lyricTweet(isMidnight) {
 			console.log(err);
 		} else {
 			console.log("Success: " + data.text);
-			// on success, tweet reply with spotify link
-			  var reply = `https://open.spotify.com/track/${id}`;
+			// on success, tweet reply with spotify link or other option
+			if (id==="saxsolo") {
+				var reply = `🎷🎷🎷`;
+			} else if (id === "coldpizza") {
+				var reply = `https://www.youtube.com/watch?v=8i5MYaVSSHE`;
+			} else {
+				var reply = `https://open.spotify.com/track/${id}`;
+			}
 			  T.post('statuses/update', { status: reply, in_reply_to_status_id: data.id_str  }, function(err, data, response) {
 				console.log("Success: " + data.text);
 			  })
 		}
 	}
 }
-
-// remove when ready to deploy - for testing only!
-lyricTweet();
 
 // Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
