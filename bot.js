@@ -53,16 +53,16 @@ function lyricTweet(isMidnight) {
 		} else {
 			console.log("Success: " + data.text);
 			// on success, tweet reply with spotify link or other option
-			if (id==="saxsolo") {
+			if (id === "saxsolo") {
 				var reply = `🎷🎷🎷`;
 			} else if (id === "coldpizza") {
 				var reply = `https://www.youtube.com/watch?v=8i5MYaVSSHE`;
 			} else {
 				var reply = `https://open.spotify.com/track/${id}`;
 			}
-			  T.post('statuses/update', { status: reply, in_reply_to_status_id: data.id_str  }, function(err, data, response) {
+			T.post('statuses/update', { status: reply, in_reply_to_status_id: data.id_str }, function (err, data, response) {
 				console.log("Success: " + data.text);
-			  })
+			})
 		}
 	}
 }
@@ -91,4 +91,3 @@ job.start();
 job2.start();
 job3.start();
 job4.start();
-
