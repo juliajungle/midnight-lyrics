@@ -36,7 +36,6 @@ function lyricTweet(isMidnight) {
 		// Get a random song from files
 		var randomInt = getRandomInt(0, allSongs.length - 1);
 		var song = allSongs[randomInt];
-		console.log(song);
 		// then get a random lyric from that song
 		var lyrics = song.lyrics.split("|");
 		var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
