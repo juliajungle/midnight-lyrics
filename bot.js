@@ -32,6 +32,7 @@ function getRandomInt(min, max) {
 function lyricTweet(isMidnight) {
 	if (isMidnight) {
 		var tweet = "We are one beating heart";
+		var id = "heart";
 	} else {
 		// Get a random song from files
 		var randomInt = getRandomInt(0, allSongs.length - 1);
@@ -51,10 +52,13 @@ function lyricTweet(isMidnight) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log("Success: " + data.text);
+			console.log("Success: " + data.text, id);
 			// on success, tweet reply with spotify link or other option
 			if (id === "saxsolo") {
 				var reply = `🎷🎷🎷`;
+			}
+			else if (id === "heart") {
+				var reply = `💜`;
 			} else if (id === "coldpizza") {
 				var reply = `https://www.youtube.com/watch?v=8i5MYaVSSHE`;
 			} else {
