@@ -3,23 +3,23 @@ const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
 const CronJob = require("cron").CronJob;
-var songs = require("./songs.json");
+// var songs = require("./songs.json");
 var daysOfThunder = require("./days_of_thunder.json");
-var endlessSummer = require("./endless_summer.json");
-var nocturnal = require("./nocturnal.json");
-var kids = require("./kids.json");
-var monsters = require("./monsters.json");
-var horrorShow = require("./horror_show.json");
+// var endlessSummer = require("./endless_summer.json");
+// var nocturnal = require("./nocturnal.json");
+// var kids = require("./kids.json");
+// var monsters = require("./monsters.json");
+// var horrorShow = require("./horror_show.json");
 
 // combine all the songs
 var allSongs = [
-	...songs,
+	// ...songs,
 	...daysOfThunder,
-	...endlessSummer,
-	...nocturnal,
-	...kids,
-	...monsters,
-	...horrorShow,
+	// ...endlessSummer,
+	// ...nocturnal,
+	// ...kids,
+	// ...monsters,
+	// ...horrorShow,
 ];
 
 function getRandomInt(min, max) {
@@ -36,10 +36,12 @@ function lyricTweet(isMidnight) {
 		// Get a random song from files
 		var randomInt = getRandomInt(0, allSongs.length - 1);
 		var song = allSongs[randomInt];
-
+		console.log(song);
 		// then get a random lyric from that song
-		var lyrics = song.split("|");
+		var lyrics = song.lyrics.split("|");
 		var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+		// get spotify id of song
+		var id = song.id;
 	}
 
 	// Tweet that lyric
@@ -51,15 +53,17 @@ function lyricTweet(isMidnight) {
 			console.log(err);
 		} else {
 			console.log("Success: " + data.text);
-			//   console.log(response);
+			// on success, tweet reply with spotify link
+			  var reply = `https://open.spotify.com/track/${id}`;
+			  T.post('statuses/update', { status: reply, in_reply_to_status_id: data.id_str  }, function(err, data, response) {
+				console.log("Success: " + data.text);
+			  })
 		}
 	}
 }
 
-// tweet once every 6 hours
-// setInterval(lyricTweet, 21600000);
-// testing
-// setInterval(lyricTweet, 10000);
+// remove when ready to deploy - for testing only!
+lyricTweet();
 
 // Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
@@ -85,3 +89,4 @@ job.start();
 job2.start();
 job3.start();
 job4.start();
+
