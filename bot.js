@@ -72,7 +72,7 @@ function lyricTweet(isMidnight) {
 	}
 }
 
-lyricTweet();
+// lyricTweet();
 
 // Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
