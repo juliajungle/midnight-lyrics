@@ -42,6 +42,7 @@ function lyricTweet(isMidnight) {
 		var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
 		// get spotify id of song
 		var id = song.id;
+		var emoji = song.emoji;
 	}
 
 	// Tweet that lyric
@@ -58,18 +59,20 @@ function lyricTweet(isMidnight) {
 				var reply = `🎷🎷🎷`;
 			}
 			else if (id === "heart") {
-				var reply = `💜`;
+				var reply = `💓`;
 			} else if (id === "coldpizza") {
-				var reply = `https://www.youtube.com/watch?v=8i5MYaVSSHE`;
+				var reply = `🍕 https://www.youtube.com/watch?v=8i5MYaVSSHE`;
 			} else {
-				var reply = `https://open.spotify.com/track/${id}`;
+				var reply = emoji ? `${emoji} https://open.spotify.com/track/${id}` : `https://open.spotify.com/track/${id}`;
 			}
 			T.post('statuses/update', { status: reply, in_reply_to_status_id: data.id_str }, function (err, data, response) {
 				console.log("Success: " + data.text);
-			})
+			});
 		}
 	}
 }
+
+lyricTweet();
 
 // Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
