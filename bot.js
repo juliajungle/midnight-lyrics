@@ -29,10 +29,13 @@ function getRandomInt(min, max) {
 }
 
 // Lyric tweeting bot
-function lyricTweet(isMidnight) {
+function lyricTweet(isMidnight, isAprilFools) {
 	if (isMidnight) {
 		var tweet = "We are one beating heart";
 		var id = "heart";
+	} else if (isAprilFools) {
+		var tweet = "Alt er klart i bakspejlet";
+		var id = "eyes";
 	} else {
 		// Get a random song from files
 		var randomInt = getRandomInt(0, allSongs.length - 1);
@@ -55,19 +58,27 @@ function lyricTweet(isMidnight) {
 		} else {
 			console.log("Success: " + data.text, id);
 			// on success, tweet reply with spotify link or other option
-			if (id === "saxsolo") {
+
+			if (id === "eyes") {
+				var reply = `👀`;
+			} else if (id === "saxsolo") {
 				var reply = `🎷🎷🎷`;
-			}
-			else if (id === "heart") {
+			} else if (id === "heart") {
 				var reply = `💓`;
 			} else if (id === "coldpizza") {
 				var reply = `🍕 https://www.youtube.com/watch?v=8i5MYaVSSHE`;
 			} else {
-				var reply = emoji ? `${emoji} https://open.spotify.com/track/${id}` : `https://open.spotify.com/track/${id}`;
+				var reply = emoji
+					? `${emoji} https://open.spotify.com/track/${id}`
+					: `https://open.spotify.com/track/${id}`;
 			}
-			T.post('statuses/update', { status: reply, in_reply_to_status_id: data.id_str }, function (err, data, response) {
-				console.log("Success: " + data.text);
-			});
+			T.post(
+				"statuses/update",
+				{ status: reply, in_reply_to_status_id: data.id_str },
+				function (err, data, response) {
+					console.log("Success: " + data.text);
+				}
+			);
 		}
 	}
 }
@@ -91,6 +102,13 @@ const job3 = new CronJob("00 00 12 * * *", function () {
 
 // Tweet at 6pm
 const job4 = new CronJob("00 00 18 * * *", function () {
+	var date = new Date();
+	var month = date.getMonth();
+	var day = date.getDate();
+	// check for April 1st
+	if (month === 4 && day === 1) {
+		lyricTweet(false, true);
+	}
 	lyricTweet();
 });
 
