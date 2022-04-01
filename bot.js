@@ -13,103 +13,103 @@ var horrorShow = require("./horror_show.json");
 
 // combine all the songs
 var allSongs = [
-  ...songs,
-  ...daysOfThunder,
-  ...endlessSummer,
-  ...nocturnal,
-  ...kids,
-  ...monsters,
-  ...horrorShow,
+	...songs,
+	...daysOfThunder,
+	...endlessSummer,
+	...nocturnal,
+	...kids,
+	...monsters,
+	...horrorShow,
 ];
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Lyric tweeting bot
 function lyricTweet(isMidnight, isAprilFools) {
-  if (isMidnight) {
-    var tweet = "We are one beating heart";
-    var id = "heart";
-  } else if (isAprilFools) {
-    var tweet = "Alt er klart i bakspejlet";
-    var id = "eyes";
-  } else {
-    // Get a random song from files
-    var randomInt = getRandomInt(0, allSongs.length - 1);
-    var song = allSongs[randomInt];
-    // then get a random lyric from that song
-    var lyrics = song.lyrics.split("|");
-    var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
-    // get spotify id of song
-    var id = song.id;
-    var emoji = song.emoji;
-  }
+	if (isMidnight) {
+		var tweet = "We are one beating heart";
+		var id = "heart";
+	} else if (isAprilFools) {
+		var tweet = "Alt er klart i bakspejlet";
+		var id = "eyes";
+	} else {
+		// Get a random song from files
+		var randomInt = getRandomInt(0, allSongs.length - 1);
+		var song = allSongs[randomInt];
+		// then get a random lyric from that song
+		var lyrics = song.lyrics.split("|");
+		var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+		// get spotify id of song
+		var id = song.id;
+		var emoji = song.emoji;
+	}
 
-  // Tweet that lyric
-  T.post("statuses/update", { status: tweet }, tweeted);
+	// Tweet that lyric
+	T.post("statuses/update", { status: tweet }, tweeted);
 
-  // Callback for when the tweet is sent
-  function tweeted(err, data, response) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Success: " + data.text, id);
-      // on success, tweet reply with spotify link or other option
+	// Callback for when the tweet is sent
+	function tweeted(err, data, response) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("Success: " + data.text, id);
+			// on success, tweet reply with spotify link or other option
 
-      if (id === "eyes") {
-        var reply = `👀`;
-      } else if (id === "saxsolo") {
-        var reply = `🎷🎷🎷`;
-      } else if (id === "heart") {
-        var reply = `💓`;
-      } else if (id === "coldpizza") {
-        var reply = `🍕 https://www.youtube.com/watch?v=8i5MYaVSSHE`;
-      } else {
-        var reply = emoji
-          ? `${emoji} https://open.spotify.com/track/${id}`
-          : `https://open.spotify.com/track/${id}`;
-      }
-      T.post(
-        "statuses/update",
-        { status: reply, in_reply_to_status_id: data.id_str },
-        function (err, data, response) {
-          console.log("Success: " + data.text);
-        }
-      );
-    }
-  }
+			if (id === "eyes") {
+				var reply = `👀`;
+			} else if (id === "saxsolo") {
+				var reply = `🎷🎷🎷`;
+			} else if (id === "heart") {
+				var reply = `💓`;
+			} else if (id === "coldpizza") {
+				var reply = `🍕 https://www.youtube.com/watch?v=8i5MYaVSSHE`;
+			} else {
+				var reply = emoji
+					? `${emoji} https://open.spotify.com/track/${id}`
+					: `https://open.spotify.com/track/${id}`;
+			}
+			T.post(
+				"statuses/update",
+				{ status: reply, in_reply_to_status_id: data.id_str },
+				function (err, data, response) {
+					console.log("Success: " + data.text);
+				}
+			);
+		}
+	}
 }
 
 // lyricTweet();
 
 // Tweet at midnight -  "We are one beating heart"
 const job = new CronJob("00 00 00 * * *", function () {
-  lyricTweet(true);
+	lyricTweet(true);
 });
 
 // Tweet at 6am
 const job2 = new CronJob("00 00 06 * * *", function () {
-  lyricTweet();
+	lyricTweet();
 });
 
 // Tweet at midday
 const job3 = new CronJob("00 00 12 * * *", function () {
-  lyricTweet();
+	lyricTweet();
 });
 
 // Tweet at 6pm
 const job4 = new CronJob("00 00 18 * * *", function () {
-  var date = new Date();
-  var month = date.getMonth();
-  var day = date.getDate();
-  // check for April 1st
-  if (month === 4 && day === 1) {
-    lyricTweet(false, true);
-  }
-  lyricTweet();
+	var date = new Date();
+	var month = date.getMonth();
+	var day = date.getDate();
+	// check for April 1st
+	if (month === 4 && day === 1) {
+		lyricTweet(false, true);
+	}
+	lyricTweet();
 });
 
 job.start();
