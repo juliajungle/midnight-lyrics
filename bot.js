@@ -105,13 +105,8 @@ const job4 = new CronJob("00 00 18 * * *", function () {
   lyricTweet();
 });
 
-// Tweet at 7pm
-const job5 = new CronJob("00 00 19 * * *", function () {
-  lyricTweet(false, true);
-});
 
 job.start();
 job2.start();
 job3.start();
 job4.start();
-job5.start();
