@@ -10,6 +10,7 @@ var nocturnal = require("./nocturnal.json");
 var kids = require("./kids.json");
 var monsters = require("./monsters.json");
 var horrorShow = require("./horror_show.json");
+var kids3 = require("./kids3.json");
 
 // combine all the songs
 var allSongs = [
@@ -20,6 +21,7 @@ var allSongs = [
 	...kids,
 	...monsters,
 	...horrorShow,
+	...kids3,
 ];
 
 function getRandomInt(min, max) {
