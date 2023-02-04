@@ -92,23 +92,70 @@ const job = new CronJob("00 00 00 * * *", function () {
 	lyricTweet(true);
 });
 
+// Tweet at 2am
+const job2 = new CronJob("00 00 02 * * *", function () {
+	lyricTweet();
+});
+
+// Tweet at 4am
+const job3 = new CronJob("00 00 04 * * *", function () {
+	lyricTweet();
+});
+
 // Tweet at 6am
-const job2 = new CronJob("00 00 06 * * *", function () {
+const job4 = new CronJob("00 00 06 * * *", function () {
+	lyricTweet();
+});
+
+// Tweet at 8am
+const job5 = new CronJob("00 00 08 * * *", function () {
+	lyricTweet();
+});
+
+// Tweet at 10am
+const job6 = new CronJob("00 00 010 * * *", function () {
 	lyricTweet();
 });
 
 // Tweet at midday
-const job3 = new CronJob("00 00 12 * * *", function () {
+const job7 = new CronJob("00 00 12 * * *", function () {
+	lyricTweet();
+});
+
+// Tweet at 2pm
+const job8 = new CronJob("00 00 14 * * *", function () {
+	lyricTweet();
+});
+
+// Tweet at 4pm
+const job9 = new CronJob("00 00 16 * * *", function () {
 	lyricTweet();
 });
 
 // Tweet at 6pm
-const job4 = new CronJob("00 00 18 * * *", function () {
+const job10 = new CronJob("00 00 18 * * *", function () {
 	lyricTweet();
 });
 
+// Tweet at 8pm
+const job11 = new CronJob("00 00 20 * * *", function () {
+	lyricTweet();
+});
+
+// Tweet at 10pm
+const job12 = new CronJob("00 00 22 * * *", function () {
+	lyricTweet();
+});
 
 job.start();
 job2.start();
 job3.start();
 job4.start();
+job5.start();
+job6.start();
+job7.start();
+job8.start();
+job9.start();
+job10.start();
+job11.start();
+job12.start();
