@@ -113,7 +113,7 @@ const job5 = new CronJob("00 00 08 * * *", function () {
 });
 
 // Tweet at 10am
-const job6 = new CronJob("00 00 010 * * *", function () {
+const job6 = new CronJob("00 00 10 * * *", function () {
 	lyricTweet();
 });
 
