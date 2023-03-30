@@ -3,25 +3,11 @@ const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
 const CronJob = require("cron").CronJob;
-var songs = require("./songs.json");
-var daysOfThunder = require("./days_of_thunder.json");
-var endlessSummer = require("./endless_summer.json");
-var nocturnal = require("./nocturnal.json");
-var kids = require("./kids.json");
-var monsters = require("./monsters.json");
-var horrorShow = require("./horror_show.json");
-var heroes = require("./heroes.json");
+var aprilFools = ("./april_fools.json");
 
 // combine all the songs
 var allSongs = [
-	...songs,
-	...daysOfThunder,
-	...endlessSummer,
-	...nocturnal,
-	...kids,
-	...monsters,
-	...horrorShow,
-	...heroes,
+	...aprilFools,
 ];
 
 function getRandomInt(min, max) {
@@ -35,9 +21,6 @@ function lyricTweet(isMidnight, isAprilFools) {
 	if (isMidnight) {
 		var tweet = "We are one beating heart";
 		var id = "heart";
-	} else if (isAprilFools) {
-		var tweet = "Alt er klart i bakspejlet";
-		var id = "eyes";
 	} else {
 		// Get a random song from files
 		var randomInt = getRandomInt(0, allSongs.length - 1);
