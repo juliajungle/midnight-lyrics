@@ -17,9 +17,9 @@ function getRandomInt(min, max) {
 }
 
 // Lyric tweeting bot
-function lyricTweet(isMidnight, isAprilFools) {
+function lyricTweet(isMidnight) {
 	if (isMidnight) {
-		var tweet = "We are one beating heart";
+		var tweet = "Vi er ét bankende hjerte";
 		var id = "heart";
 	} else {
 		// Get a random song from files
