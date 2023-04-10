@@ -46,11 +46,8 @@ function lyricTweet() {
 		var emoji = song.emoji;
 	}
 
-	// Tweet that lyric
-	T.post("statuses/update", { status: tweet }, tweeted);
-
-	// Callback for when the tweet is sent
-	function tweeted(err, data, response) {
+	// Tweet that lyric and handle callback after it has been sent
+	T.post("statuses/update", { status: tweet }, function (err, data, response) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -78,7 +75,7 @@ function lyricTweet() {
 				}
 			);
 		}
-	}
+	});
 }
 
 // Tweet at every 2 hours
