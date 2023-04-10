@@ -3,25 +3,17 @@ const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
 const CronJob = require("cron").CronJob;
-var songs = require("./lyrics/songs.json");
-var daysOfThunder = require("./lyrics/days_of_thunder.json");
-var endlessSummer = require("./lyrics/endless_summer.json");
-var nocturnal = require("./lyrics/nocturnal.json");
-var kids = require("./lyrics/kids.json");
-var monsters = require("./lyrics/monsters.json");
-var horrorShow = require("./lyrics/horror_show.json");
-var heroes = require("./lyrics/heroes.json");
 
-// combine all the songs
+// Combine all the songs
 var allSongs = [
-	...songs,
-	...daysOfThunder,
-	...endlessSummer,
-	...nocturnal,
-	...kids,
-	...monsters,
-	...horrorShow,
-	...heroes,
+	...require("./lyrics/songs.json"),
+	...require("./lyrics/days_of_thunder.json"),
+	...require("./lyrics/endless_summer.json"),
+	...require("./lyrics/nocturnal.json"),
+	...require("./lyrics/kids.json"),
+	...require("./lyrics/monsters.json"),
+	...require("./lyrics/horror_show.json"),
+	...require("./lyrics/heroes.json"),
 ];
 
 function getRandomInt(min, max) {
