@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "bot.js",
 	"dependencies": {
-		"cron": "^2.3.0",
+		"croner": "^6.0.3",
 		"dotenv": "^16.0.3",
 		"twit": "^2.2.11"
 	},

@@ -9,7 +9,7 @@ const T = new twit({
 	access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 });
 
-const CronJob = require("cron").CronJob;
+const { Cron } = require('croner');
 const https = require('https');
 
 // Combine all the songs
@@ -72,14 +72,11 @@ function lyricTweet() {
 }
 
 // Tweet at every 2 hours
-const job = new CronJob("00 00 */2 * * *", function () {
+Cron("00 */2 * * *", () => {
 	lyricTweet();
 });
 
 // UptimeRobot heartbeat monitoring
-const uptime = new CronJob("00 */5 * * * *", function () {
+Cron("*/5 * * * *", () => {
 	https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
 });
-
-job.start();
-uptime.start();
