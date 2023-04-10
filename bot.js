@@ -6,14 +6,14 @@ const CronJob = require("cron").CronJob;
 
 // Combine all the songs
 var allSongs = [
-	...require("./lyrics/songs.json"),
-	...require("./lyrics/days_of_thunder.json"),
-	...require("./lyrics/endless_summer.json"),
-	...require("./lyrics/nocturnal.json"),
-	...require("./lyrics/kids.json"),
-	...require("./lyrics/monsters.json"),
-	...require("./lyrics/horror_show.json"),
-	...require("./lyrics/heroes.json"),
+	...require("./songs/songs.json"),
+	...require("./songs/days_of_thunder.json"),
+	...require("./songs/endless_summer.json"),
+	...require("./songs/nocturnal.json"),
+	...require("./songs/kids.json"),
+	...require("./songs/monsters.json"),
+	...require("./songs/horror_show.json"),
+	...require("./songs/heroes.json"),
 ];
 
 function getRandomInt(max) {
