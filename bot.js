@@ -31,7 +31,7 @@ function getRandomInt(max) {
 // Lyric tweeting bot
 function lyricTweet() {
 	// Special tweet at midnight
-	if (new Date().getHours() == 0) {
+	if (new Date().getHours() === 0) {
 		var tweet = "We are one beating heart";
 		var id = "heart";
 	} else {
