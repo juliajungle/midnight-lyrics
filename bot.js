@@ -10,6 +10,7 @@ const T = new twit({
 });
 
 const CronJob = require("cron").CronJob;
+const https = require('https');
 
 // Combine all the songs
 var allSongs = [
@@ -85,4 +86,10 @@ const job = new CronJob("00 00 */2 * * *", function () {
 	lyricTweet();
 });
 
+// UptimeRobot heartbeat monitoring
+const uptime = new CronJob("00 */5 * * * *", function () {
+	https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
+});
+
 job.start();
+uptime.start();
