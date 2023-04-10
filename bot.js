@@ -1,7 +1,14 @@
 #!/usr/bin/env node
-const config = require("./config/config");
+require("dotenv").config();
+
 const twit = require("twit");
-const T = new twit(config);
+const T = new twit({
+	consumer_key: process.env.API_KEY,
+	consumer_secret: process.env.API_SECRET_KEY,
+	access_token: process.env.ACCESS_TOKEN,
+	access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+});
+
 const CronJob = require("cron").CronJob;
 
 // Combine all the songs
