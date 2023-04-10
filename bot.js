@@ -16,10 +16,8 @@ var allSongs = [
 	...require("./lyrics/heroes.json"),
 ];
 
-function getRandomInt(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomInt(max) {
+	return Math.floor(Math.random() * max);
 }
 
 // Lyric tweeting bot
@@ -30,11 +28,11 @@ function lyricTweet() {
 		var id = "heart";
 	} else {
 		// Get a random song from files
-		var randomInt = getRandomInt(0, allSongs.length - 1);
+		var randomInt = getRandomInt(allSongs.length - 1);
 		var song = allSongs[randomInt];
 		// then get a random lyric from that song
 		var lyrics = song.lyrics.split("|");
-		var tweet = lyrics[getRandomInt(0, lyrics.length - 1)];
+		var tweet = lyrics[getRandomInt(lyrics.length - 1)];
 		// get spotify id of song
 		var id = song.id;
 		var emoji = song.emoji;
