@@ -33,7 +33,7 @@ function lyricTweet() {
 	// Special tweet at midnight
 	if (new Date().getHours() === 0) {
 		var tweet = "We are one beating heart";
-		var id = "heart";
+		var reply = "💓";
 	} else {
 		// Get a random song from files
 		var randomInt = getRandomInt(allSongs.length - 1);
@@ -44,6 +44,7 @@ function lyricTweet() {
 		// get spotify id of song
 		var id = song.id;
 		var emoji = song.emoji;
+		var reply = song.reply;
 	}
 
 	// Tweet that lyric and handle callback after it has been sent
@@ -52,18 +53,10 @@ function lyricTweet() {
 			console.log(err);
 		} else {
 			console.log("Success: " + data.text, id);
-			// on success, tweet reply with spotify link or other option
 
-			if (id === "eyes") {
-				var reply = `👀`;
-			} else if (id === "saxsolo") {
-				var reply = `🎷🎷🎷`;
-			} else if (id === "heart") {
-				var reply = `💓`;
-			} else if (id === "coldpizza") {
-				var reply = `🍕 https://www.youtube.com/watch?v=8i5MYaVSSHE`;
-			} else {
-				var reply = emoji
+			// If reply is undefined, create one with emoji (if exist) and Spotify link
+			if (reply === undefined) {
+				reply = emoji
 					? `${emoji} https://open.spotify.com/track/${id}`
 					: `https://open.spotify.com/track/${id}`;
 			}
