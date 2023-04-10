@@ -3,14 +3,14 @@ const config = require("./config/config");
 const twit = require("twit");
 const T = new twit(config);
 const CronJob = require("cron").CronJob;
-var songs = require("./songs.json");
-var daysOfThunder = require("./days_of_thunder.json");
-var endlessSummer = require("./endless_summer.json");
-var nocturnal = require("./nocturnal.json");
-var kids = require("./kids.json");
-var monsters = require("./monsters.json");
-var horrorShow = require("./horror_show.json");
-var heroes = require("./heroes.json");
+var songs = require("./lyrics/songs.json");
+var daysOfThunder = require("./lyrics/days_of_thunder.json");
+var endlessSummer = require("./lyrics/endless_summer.json");
+var nocturnal = require("./lyrics/nocturnal.json");
+var kids = require("./lyrics/kids.json");
+var monsters = require("./lyrics/monsters.json");
+var horrorShow = require("./lyrics/horror_show.json");
+var heroes = require("./lyrics/heroes.json");
 
 // combine all the songs
 var allSongs = [
