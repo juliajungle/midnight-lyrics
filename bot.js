@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 require("dotenv").config();
 
-const twit = require("twit");
-const T = new twit({
-	consumer_key: process.env.API_KEY,
-	consumer_secret: process.env.API_SECRET_KEY,
-	access_token: process.env.ACCESS_TOKEN,
-	access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-});
+const { TwitterApi } = require('twitter-api-v2');
+const twitterClient = new TwitterApi({
+	appKey: process.env.API_KEY,
+	appSecret: process.env.API_SECRET_KEY,
+	accessToken: process.env.ACCESS_TOKEN,
+	accessSecret: process.env.ACCESS_TOKEN_SECRET,
+}).readWrite.v2;
 
 const { Cron } = require('croner');
 const https = require('https');
@@ -29,7 +29,7 @@ function getRandomInt(max) {
 }
 
 // Lyric tweeting bot
-function lyricTweet() {
+const lyricTweet = async () => {
 	// Special tweet at midnight
 	if (new Date().getHours() === 0) {
 		var tweet = "We are one beating heart";
@@ -47,28 +47,27 @@ function lyricTweet() {
 		var reply = song.reply;
 	}
 
-	// Tweet that lyric and handle callback after it has been sent
-	T.post("statuses/update", { status: tweet }, function (err, data, response) {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log("Success: " + data.text, id);
+	// Tweet that lyric
+	try {
+		const {data: createdTweet} = await twitterClient.tweet(tweet);
 
-			// If reply is undefined, create one with emoji (if exist) and Spotify link
-			if (reply === undefined) {
-				reply = emoji
-					? `${emoji} https://open.spotify.com/track/${id}`
-					: `https://open.spotify.com/track/${id}`;
-			}
-			T.post(
-				"statuses/update",
-				{ status: reply, in_reply_to_status_id: data.id_str },
-				function (err, data, response) {
-					console.log("Success: " + data.text);
-				}
-			);
+		// If reply is undefined, create one with emoji (if exist) and Spotify link
+		if (reply === undefined) {
+			reply = emoji
+				? `${emoji} https://open.spotify.com/track/${id}`
+				: `https://open.spotify.com/track/${id}`;
 		}
-	});
+
+		console.log('Tweet sent: ' + createdTweet.text);
+
+		const {data: replyTweet} = await twitterClient.reply(reply, createdTweet.id);
+
+		console.log('Reply sent: ' + replyTweet.text);
+	}
+
+	catch (err) {
+		console.error(err);
+	}
 }
 
 // Tweet at every 2 hours

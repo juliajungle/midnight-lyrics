@@ -6,7 +6,7 @@
 	"dependencies": {
 		"croner": "^6.0.3",
 		"dotenv": "^16.0.3",
-		"twit": "^2.2.11"
+		"twitter-api-v2": "^1.14.2"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
