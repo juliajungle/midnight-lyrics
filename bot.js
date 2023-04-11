@@ -70,8 +70,6 @@ const lyricTweet = async () => {
 	}
 }
 
-lyricTweet();
-
 // Tweet at every 2 hours
 Cron('00 */2 * * *', () => {
 	lyricTweet();
