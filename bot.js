@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require("dotenv").config();
+require('dotenv').config();
 
 const { TwitterApi } = require('twitter-api-v2');
 const twitterClient = new TwitterApi({
@@ -14,14 +14,14 @@ const https = require('https');
 
 // Combine all the songs
 var allSongs = [
-	...require("./songs/songs.json"),
-	...require("./songs/days_of_thunder.json"),
-	...require("./songs/endless_summer.json"),
-	...require("./songs/nocturnal.json"),
-	...require("./songs/kids.json"),
-	...require("./songs/monsters.json"),
-	...require("./songs/horror_show.json"),
-	...require("./songs/heroes.json"),
+	...require('./songs/songs.json'),
+	...require('./songs/days_of_thunder.json'),
+	...require('./songs/endless_summer.json'),
+	...require('./songs/nocturnal.json'),
+	...require('./songs/kids.json'),
+	...require('./songs/monsters.json'),
+	...require('./songs/horror_show.json'),
+	...require('./songs/heroes.json'),
 ];
 
 function getRandomInt(max) {
@@ -32,14 +32,14 @@ function getRandomInt(max) {
 const lyricTweet = async () => {
 	// Special tweet at midnight
 	if (new Date().getHours() === 0) {
-		var tweet = "We are one beating heart";
-		var reply = "💓";
+		var tweet = 'We are one beating heart';
+		var reply = '💓';
 	} else {
 		// Get a random song from files
 		var randomInt = getRandomInt(allSongs.length - 1);
 		var song = allSongs[randomInt];
 		// then get a random lyric from that song
-		var lyrics = song.lyrics.split("|");
+		var lyrics = song.lyrics.split('|');
 		var tweet = lyrics[getRandomInt(lyrics.length - 1)];
 		// get spotify id of song
 		var id = song.id;
@@ -70,12 +70,14 @@ const lyricTweet = async () => {
 	}
 }
 
+lyricTweet();
+
 // Tweet at every 2 hours
-Cron("00 */2 * * *", () => {
+Cron('00 */2 * * *', () => {
 	lyricTweet();
 });
 
 // UptimeRobot heartbeat monitoring
-Cron("*/5 * * * *", () => {
+Cron('*/5 * * * *', () => {
 	https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
 });
