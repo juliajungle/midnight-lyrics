@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('dotenv').config();
 
-const { TwitterApi } = require('twitter-api-v2');
+const { TwitterApi, ApiResponseError } = require('twitter-api-v2');
 const twitterClient = new TwitterApi({
 	appKey: process.env.API_KEY,
 	appSecret: process.env.API_SECRET_KEY,
@@ -65,8 +65,14 @@ const lyricTweet = async () => {
 		console.log('Reply sent: ' + replyTweet.text);
 	}
 
-	catch (err) {
-		console.error(err);
+	catch (e) {
+		if (e instanceof ApiResponseError && e.code === 403) {
+			console.warn('Tweet with duplicate content detected (error 403) - retrying lyricTweet()');
+			lyricTweet();
+		}
+
+		else
+			console.error(e);
 	}
 }
 
