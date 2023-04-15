@@ -77,7 +77,7 @@ const lyricTweet = async () => {
 }
 
 // Tweet at every 2 hours
-Cron('00 */2 * * *', () => {
+const lyricJob = Cron('00 */2 * * *', () => {
 	lyricTweet();
 });
 
@@ -87,3 +87,6 @@ if (process.env.UPTIMEROBOT_HEARTBEAT_URL !== '') {
 		https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
 	});
 }
+
+var minsUntilNextTweet = Math.floor(lyricJob.msToNext() / 1000 / 60);
+console.log('Bot has started successfully - ' + minsUntilNextTweet + ' minutes until next tweet.');
