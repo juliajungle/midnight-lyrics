@@ -76,6 +76,8 @@ Cron('00 */2 * * *', () => {
 });
 
 // UptimeRobot heartbeat monitoring
-Cron('*/5 * * * *', () => {
-	https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
-});
+if (process.env.UPTIMEROBOT_HEARTBEAT_URL !== '') {
+	Cron('*/5 * * * *', () => {
+		https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
+	});
+}
