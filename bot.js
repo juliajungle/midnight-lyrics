@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('dotenv').config();
 
-const { TwitterApi } = require('twitter-api-v2');
+const { TwitterApi, ApiResponseError } = require('twitter-api-v2');
 const twitterClient = new TwitterApi({
 	appKey: process.env.API_KEY,
 	appSecret: process.env.API_SECRET_KEY,
@@ -65,17 +65,28 @@ const lyricTweet = async () => {
 		console.log('Reply sent: ' + replyTweet.text);
 	}
 
-	catch (err) {
-		console.error(err);
+	catch (e) {
+		if (e instanceof ApiResponseError && e.code === 403) {
+			console.log('Tweet with duplicate content detected (error 403) - retrying lyricTweet()');
+			lyricTweet();
+		}
+
+		else
+			console.error(e);
 	}
 }
 
 // Tweet at every 2 hours
-Cron('00 */2 * * *', () => {
+const lyricJob = Cron('00 */2 * * *', () => {
 	lyricTweet();
 });
 
 // UptimeRobot heartbeat monitoring
-Cron('*/5 * * * *', () => {
-	https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
-});
+if (process.env.UPTIMEROBOT_HEARTBEAT_URL !== '') {
+	Cron('*/5 * * * *', () => {
+		https.get(process.env.UPTIMEROBOT_HEARTBEAT_URL);
+	});
+}
+
+var minsUntilNextTweet = Math.floor(lyricJob.msToNext() / 1000 / 60);
+console.log('Bot has started successfully - ' + minsUntilNextTweet + ' minutes until next tweet.');
