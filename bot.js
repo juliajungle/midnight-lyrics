@@ -88,5 +88,5 @@ if (process.env.UPTIMEROBOT_HEARTBEAT_URL !== '') {
 	});
 }
 
-var minsUntilNextTweet = Math.floor(lyricJob.msToNext() / 1000 / 60);
+var minsUntilNextTweet = Math.ceil(lyricJob.msToNext() / 1000 / 60);
 console.log('Bot has started successfully - ' + minsUntilNextTweet + ' minutes until next tweet.');
