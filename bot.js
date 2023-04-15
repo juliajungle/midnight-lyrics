@@ -67,7 +67,7 @@ const lyricTweet = async () => {
 
 	catch (e) {
 		if (e instanceof ApiResponseError && e.code === 403) {
-			console.warn('Tweet with duplicate content detected (error 403) - retrying lyricTweet()');
+			console.log('Tweet with duplicate content detected (error 403) - retrying lyricTweet()');
 			lyricTweet();
 		}
 
